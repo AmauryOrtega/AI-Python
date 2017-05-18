@@ -9,7 +9,7 @@ from sklearn.metrics import mean_squared_error as ECM
 from sklearn.ensemble import RandomForestRegressor
 
 # Varibale global
-GRAFICAR = True
+GRAFICAR = False
 
 juegos = pandas.read_csv("games.csv")
 # Imprime las columnas que se leyeron
