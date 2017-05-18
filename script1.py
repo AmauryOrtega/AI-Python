@@ -9,7 +9,7 @@ from sklearn.metrics import mean_squared_error as ECM
 from sklearn.ensemble import RandomForestRegressor
 
 # Varibale global
-GRAFICAR = False
+GRAFICAR = True
 
 juegos = pandas.read_csv("games.csv")
 # Imprime las columnas que se leyeron
@@ -180,7 +180,6 @@ modelo.fit(set_entrenamiento[columnas], set_entrenamiento[columna_a_predecir])
 predicciones = modelo.predict(set_test[columnas])
 print("-"*5 + "Predicciones" + "-"*5)
 print(predicciones)
-predicciones_lineal = predicciones
 print("-"*5 + "VS" + "-"*5)
 print(juegos.tail(1)["average_rating"])
 print()
@@ -215,7 +214,6 @@ modelo.fit(set_entrenamiento[columnas], set_entrenamiento[columna_a_predecir])
 predicciones = modelo.predict(set_test[columnas])
 print("-"*5 + "Predicciones" + "-"*5)
 print(predicciones)
-predicciones_random = predicciones
 print("-"*5 + "VS" + "-"*5)
 print(juegos.tail(1)["average_rating"])
 print()
