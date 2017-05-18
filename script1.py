@@ -9,7 +9,7 @@ from sklearn.metrics import mean_squared_error as ECM
 from sklearn.ensemble import RandomForestRegressor
 
 # Varibale global
-GRAFICAR = False
+GRAFICAR = True
 
 juegos = pandas.read_csv("games.csv")
 # Imprime las columnas que se leyeron
@@ -29,9 +29,13 @@ print()
 # de las puntiaciones en promedio de todos los juegos usando
 # Lee DataSet
 # indexacion por columna que retorna toda una columna
-graficar.hist(juegos["average_rating"])
-if GRAFICAR: graficar.show()
-
+if GRAFICAR:
+    graficar.title("Distribucion de puntuacion promedio")
+    graficar.xlabel("Puntuacion promedio")
+    graficar.ylabel("# de Juegos")
+    graficar.hist(juegos["average_rating"])
+    graficar.show()
+    graficar.clf()
 # juegos[juegos["average_rating"] == 0] retornara un dataframe con solo las
 # filas donde el valor de la columna average_rating es 0
 
@@ -52,8 +56,13 @@ juegos = juegos[juegos["users_rated"] > 0]
 juegos = juegos.dropna(axis=0)
 
 # Distribucion de puntuacion promedio
-graficar.hist(juegos["average_rating"])
-if GRAFICAR: graficar.show()
+if GRAFICAR:
+    graficar.title("Distribucion de puntuacion promedio")
+    graficar.xlabel("Puntuacion promedio")
+    graficar.ylabel("# de Juegos")
+    graficar.hist(juegos["average_rating"])
+    graficar.show()
+    graficar.clf()
 # Imprime cuantas filas, columnas tenemos
 print("-"*5 + "Tamaño de DataSet (Filas, Columnas)" + "-"*5)
 print(juegos.shape)
@@ -92,9 +101,12 @@ etiquetas = modelo_kmeans.labels_
 acp_2 = ACP(2)
 # Se obtienen que columnas graficar
 columnas_a_graficar = acp_2.fit_transform(columnas_numero)
-# Se crea la grafica
-graficar.scatter(x=columnas_a_graficar[:,0], y=columnas_a_graficar[:,1], c=etiquetas)
-if GRAFICAR: graficar.show()
+if GRAFICAR:
+    # Se crea la grafica
+    graficar.title("Agrupacion de juegos en 5 clusters con ACP")
+    graficar.scatter(x=columnas_a_graficar[:,0], y=columnas_a_graficar[:,1], c=etiquetas)
+    graficar.show()
+    graficar.clf()
 
 # Inteligencia artificial
 # Para esto hay que determinar como se medira el error y que se va a predecir
@@ -168,6 +180,7 @@ modelo.fit(set_entrenamiento[columnas], set_entrenamiento[columna_a_predecir])
 predicciones = modelo.predict(set_test[columnas])
 print("-"*5 + "Predicciones" + "-"*5)
 print(predicciones)
+predicciones_lineal = predicciones
 print("-"*5 + "VS" + "-"*5)
 print(juegos.tail(1)["average_rating"])
 print()
@@ -175,6 +188,15 @@ print()
 print("-"*5 + "Error en prediccion" + "-"*5)
 print(ECM(predicciones, set_test[columna_a_predecir]))
 print()
+# Grafica predicciones vs reales con regresion lineal
+if GRAFICAR:
+    graficar.figure("lineal")
+    graficar.title("Regresion lineal")
+    graficar.xlabel("ID Juego")
+    graficar.ylabel("Puntuacion promedio")
+    graficar.scatter(set_test["id"], set_test["average_rating"], label="Real")
+    graficar.scatter(set_test["id"], predicciones, label="Prediccion")
+    graficar.legend(loc="upper left")
 
 # FIN DE REGRESSION LINEAL
 # Aunque Scikit-learn nos permite usar otro algoritmo, se usara
@@ -193,6 +215,7 @@ modelo.fit(set_entrenamiento[columnas], set_entrenamiento[columna_a_predecir])
 predicciones = modelo.predict(set_test[columnas])
 print("-"*5 + "Predicciones" + "-"*5)
 print(predicciones)
+predicciones_random = predicciones
 print("-"*5 + "VS" + "-"*5)
 print(juegos.tail(1)["average_rating"])
 print()
@@ -200,3 +223,14 @@ print()
 print("-"*5 + "Error en prediccion" + "-"*5)
 print(ECM(predicciones, set_test[columna_a_predecir]))
 print()
+# Grafica predicciones vs reales con regresion random forest
+if GRAFICAR:
+    graficar.figure("random")
+    graficar.title("Regresion Random Forest")
+    graficar.xlabel("ID Juego")
+    graficar.ylabel("Puntuacion promedio")
+    graficar.scatter(set_test["id"], set_test["average_rating"], label="Real")
+    graficar.scatter(set_test["id"], predicciones, label="Prediccion")
+    graficar.legend(loc="upper left")
+    # Muestra todas las graficas que esten cargadas
+    graficar.show()
