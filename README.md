@@ -33,3 +33,6 @@ id,type,name,yearpublished,minplayers,maxplayers,playingtime
 |3   |120677  |boardgame   |Terra Mystica       |2012           |
 
 Las matrices se pueden tratar usando NumPy pero tienes desventajas. Asi que se usa *dataframe*.
+
+
+[FUENTE](https://www.dataquest.io/blog/machine-learning-python/)
