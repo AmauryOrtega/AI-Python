@@ -1,3 +1,6 @@
+## Presentacion
+[PDF](https://github.com/AmauryOrtega/AI-Python/blob/master/Regresion%20lineal%20-%20Exposicion.pdf)
+
 ## Instalar
 ```
 sudo pip install pandas
